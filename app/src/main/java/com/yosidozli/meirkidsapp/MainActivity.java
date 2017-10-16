@@ -753,7 +753,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
                 //update user screen
                 Bundle bundle = new Bundle();
                 bundle.putString("user_id",String.valueOf(mUser.getPersonId()));
-                bundle.putString("user_name", mUser.getFirstName()+" "+mUser.getLastName());
+                //bundle.putString("user_name", mUser.getFirstName()+" "+mUser.getLastName());
                 DateFormat df = SimpleDateFormat.getDateInstance();
 
                 bundle.putString("user_connection_date",df.format(new Date()));
@@ -888,7 +888,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
                 if( (user = mUserParser.validateUser(inputStream)) != null) {
                     Bundle bundle = new Bundle();
                     bundle.putString("user_id",String.valueOf(user.getPersonId()));
-                    bundle.putString("user_name", user.getFirstName()+" "+user.getLastName());
+                    //bundle.putString("user_name", user.getFirstName()+" "+user.getLastName());
                     DateFormat df = SimpleDateFormat.getDateInstance();
                     bundle.putString("user_connection_date",df.format (new Date()));
                     mFirebaseAnalytics.logEvent("user_login", bundle);

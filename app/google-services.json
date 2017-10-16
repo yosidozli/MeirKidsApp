@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "925506252988",
+    "firebase_url": "https://meirkidsapp.firebaseio.com",
+    "project_id": "meirkidsapp",
+    "storage_bucket": "meirkidsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925506252988:android:95a426fad1228275",
+        "android_client_info": {
+          "package_name": "com.yosidozli.meirkidsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925506252988-9jei445qclh8o802mcqvq3icott13irl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yosidozli.meirkidsapp",
+            "certificate_hash": "6cf357b09fe2d7272ad94b8eb51c6f11fd445d59"
+          }
+        },
+        {
+          "client_id": "925506252988-c78ts0hc9a40gos0obshhpt94bsidi0k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ4S0QU6fFJcFQHPKM5vLNXOg2UkQyGb0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925506252988-c78ts0hc9a40gos0obshhpt94bsidi0k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
