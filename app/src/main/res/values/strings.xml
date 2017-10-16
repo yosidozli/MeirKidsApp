@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">Meir Kids</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+    <string name="title_activity_video_fullscreen" translatable="false">VideoFullscreenActivity</string>
+    <string name="dummy_button" translatable="false">Dummy Button</string>
+    <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
+
+
+    <string name="mediaUri" translatable="false">http://media3.meirkids.co.il</string>
+    <string name="title_activity_login">Sign in</string>"
+    <string name="error_no_internet">No internet connection please press button to try again</string>
+    <string name="button_try_again">Try again</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_user_name">User Name</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_user_name">This user name is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+
+
+    <string name="cache_lessons_list_file" translatable="false">lessons.ser</string>
+    <string name="cache_sets_list_file" translatable="false">sets.ser</string>
+    <string name="cache_setLessons_list_file" translatable="false">setsLessons.ser</string>
+
+    <string name="menu_login">Login</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_register">Register</string>
+    <string name="menu_contact_us">Contact Us</string>
+    <string name="menu_meir_kids_web">Go To Website</string>
+
+    <string name="user_preferences" translatable="false">userPref</string>
+    <string name="pref_key_user" translatable="false">User</string>
+    <string name="pref_key_password" translatable="false">Password</string>
+    <string name="pref_key_userName" translatable="false">UserName</string>
+    <string name="pref_key_last_viewed" translatable="false">Lest Lesson Viewed</string>
+
+
+    <string name="url_user_validation" translatable="false">http://82.80.198.104/UserValidationServiceWebGet/UserValidationService.svc/IsUserValid</string>
+    <string name="url_registration" translatable="false"> https://reg.meirkids.co.il/</string>
+    <string name="url_contact" translatable="false">"http://meirkids.co.il/Contact</string>
+    <string name="url_check_version" translatable="false">http://meirkids.co.il/app/v.html</string>
+    <string name="url_meirkids_website" translatable="false">http://meirkids.co.il</string>
+    <string name="url_about" translatable="false">http://meirkids.co.il/אודות/</string>
+
+    <string name="message_url_registration" translatable="false"><a href=" https://reg.meirkids.co.il/">Register</a></string>
+    <string name="text_content_about_title">About</string>
+    <string name="text_content_about" translatable="false"> ערוץ הילדים, המשדר מגוון תכניות מידי שבוע, יוצר חיבור מעניין בין עולם היהדות על ערכיו, לבין סביבת החיים הטבעית המוכרת לילדים. בכל פרק מתמודדים הילדים עם דילמה ערכית מסויימת בדרך חוויתית, ומנווטים את העלילה למסקנות מתבקשות, תוך מיצוי היבטים חינוכיים רבים העולים ממנה. התכניות עוסקות בשלל נושאים המהווים את עולמו של הילד.</string>
+    <string name="frag_user_details_user_name_title" translatable="false">User</string>
+    <string name="text_content_contact_us_title" >Contact Us</string>
+
+
+    <string name="message_register_to_continue">To watch all content register</string>
+
+
+    <string name="connect_dialog_message">Welcome to Meir Kids new App to watch all content please sign in</string>
+    <string name="connect_dialog_connect">Connect</string>
+    <string name="connect_diaolg_register">Register</string>
+    <string name="connect_dialog_cancel">Guest</string>
+    <string name="connect_dialog_title">Welcome</string>
+
+    <string name="update_dialog_message">A new application update is available please update </string>
+    <string name="update_dialog_update">Update</string>
+    <string name="update_dialog_cancel">Not Now</string>
+    <string name="update_dialog_title">New Update Is Available</string>
+
+    <string name="force_update_dialog_message">A new application update is available please update </string>
+    <string name="force_update_dialog_update">Update</string>
+    <string name="force_update_dialog_cancel">Not Now</string>
+    <string name="force_update_dialog_title">New Update Is Available</string>
+
+
+    <string name="toast_login">%1$s logged in</string>
+    <string name="toast_logout">%1$s logged out</string>
+    <string name="toast_downloading_lessons">Preparing to stream video</string>
+    <string name="app_data_version" translatable="false">1.0</string>
+
+</resources>

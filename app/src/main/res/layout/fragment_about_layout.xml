@@ -1,0 +1,117 @@
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yosidozli.meirkidsapp.AboutFragment">
+
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/about_fragment_web_view"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+    </WebView>
+    <ProgressBar android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:id="@+id/about_fragment_progress_bar">
+
+    </ProgressBar>
+    </android.support.constraint.ConstraintLayout>
+
+
+<!--<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yosidozli.meirkidsapp.AboutFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+
+            android:id="@+id/frag_user_details_user_name_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textAlignment="center"
+            android:text="@string/frag_user_details_user_name_title"
+            android:layout_margin="16dp"
+            />
+
+        <TextView
+            android:id="@+id/frag_user_details_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            tools:text="TextView"
+            android:textAlignment="center"
+            android:textAppearance="?android:textAppearanceMedium"
+            />
+
+    <TextView
+
+        android:id="@+id/frag_user_details_about_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textAlignment="center"
+        android:text="@string/text_content_about_title"
+        android:layout_margin="16dp"
+       />
+
+    <TextView
+        android:id="@+id/frag_user_details_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/text_content_about"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceSmall"
+
+         />
+
+        <TextView
+
+            android:id="@+id/frag_user_details_contact_us_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textAlignment="center"
+            android:text="@string/text_content_contact_us_title"
+            android:layout_margin="16dp"
+            />
+
+        <TextView
+            android:id="@+id/frag_user_details_contact_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/url_contact"
+            android:textAlignment="center"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:autoLink="web"
+
+            />
+
+
+
+
+    </LinearLayout>
+</ScrollView> -->
+
+

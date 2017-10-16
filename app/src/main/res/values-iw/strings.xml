@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ערוץ מאיר לילדים</string>
+    <string name="message_register_to_continue">להרשמה לערוץ וצפייה בכל התכנים לחץ כאן</string>
+    <string name="action_sign_in">התחבר</string>
+    <string name="action_sign_in_short">התחבר</string>
+    <string name="button_try_again">נסה שוב</string>
+    <string name="error_field_required">חייב למלא שדה זה</string>
+    <string name="error_incorrect_password">הסיסמה שגויה</string>
+    <string name="error_invalid_password">הסיסמה קצרה מדי</string>
+    <string name="error_invalid_user_name">שם המשתמש אינו חוקי</string>
+    <string name="error_no_internet">תקלה בחיבור לאינטרנט נא לחץ לנסות שוב</string>
+    <string name="menu_login">התחבר</string>
+    <string name="menu_logout">התנתק</string>
+    <string name="menu_register">הרשמה</string>
+    <string name="prompt_password">סיסמה</string>
+    <string name="prompt_user_name">שם משתמש</string>
+    <string name="text_content_about_title">אודות</string>
+    <string name="text_content_contact_us_title">צור קשר</string>
+    <string name="title_activity_login">התחברות</string>
+
+    <string name="connect_dialog_cancel">המשך כאורח</string>
+    <string name="connect_dialog_connect">התחבר</string>
+    <string name="connect_dialog_message">לצפייה בכל התכנים יש להתחבר באמצעות שם משתמש וסיסמה</string>
+    <string name="connect_dialog_title">ברוכים הבאים</string>
+    <string name="connect_diaolg_register">הרשמה לאתר</string>
+    <string name="menu_contact_us">צור קשר</string>
+    <string name="menu_meir_kids_web">לאתר</string>
+    <string name="update_dialog_cancel">לא כרגע</string>
+    <string name="update_dialog_message">קיים עדכון חדש לאפליקציה, לעדכן עכשיו לחץ על עדכן</string>
+    <string name="update_dialog_title">עדכון חדש</string>
+    <string name="update_dialog_update">עדכן</string>
+    <string name="force_update_dialog_cancel">לא כרגע</string>
+    <string name="force_update_dialog_message">קיים עדכון חדש לאפליקציה, לעדכן עכשיו לחץ על עדכן </string>
+
+    <string name="force_update_dialog_title">עדכון חדש</string>
+    <string name="force_update_dialog_update">עדכן</string>
+
+    <string name="toast_login">מחובר כעת: %1$s</string>
+    <string name="toast_logout">%1$s התנתק</string>
+    <string name="toast_downloading_lessons">מכין וידאו לצפייה</string>
+</resources>
