@@ -57,7 +57,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+import Utils.AnalyticsUtils;
 
 
 public class MainActivity extends AppCompatActivity implements AboutFragment.OnFragmentInteractionListener,
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
     private FirebaseAnalytics mFirebaseAnalytics;
     private LoginTask mLoginTask;
     private DownloadLessonsXmlTask mDownloadLessonXmlTask;
+    private AnalyticsUtils mAnalyticsUtils;
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
             if(mDownloadLessonXmlTask != null && !mDownloadLessonXmlTask.isCancelled())
                 mDownloadLessonXmlTask.cancel(false);
             chosedLessonTitle = lessons.get(clickedItemIndex).getTitle();
+            mAnalyticsUtils.logLesson(lessons.get(clickedItemIndex));
             mDownloadLessonXmlTask =  new DownloadLessonsXmlTask();
            mDownloadLessonXmlTask.execute(URL,lessons.get(clickedItemIndex).getLessonSetID());
 
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
             if(mDownloadLessonXmlTask != null && !mDownloadLessonXmlTask.isCancelled())
                 mDownloadLessonXmlTask.cancel(false);
             chosedLessonTitle = null;
+            mAnalyticsUtils.logSet(lessonSets.get(clickedItemIndex));
             mDownloadLessonXmlTask =  new DownloadLessonsXmlTask();
             mDownloadLessonXmlTask.execute(URL,lessonSets.get(clickedItemIndex).getID());
         }
@@ -163,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loading_layout);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mAnalyticsUtils = new AnalyticsUtils(this);
 
 
         ;//.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.bar_logo));

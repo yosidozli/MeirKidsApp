@@ -42,6 +42,8 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.util.List;
 
+import Utils.AnalyticsUtils;
+
 public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener {
     String mediaUri = "http://media3.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
     String notApprovedMediaUri = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
@@ -57,6 +59,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     private static int layout = R.layout.new_item_content_layout_video;
     private User mUser;
     private PreferencesUtils prefUtils;
+    private AnalyticsUtils mAnalyticsUtils;
 
 
     @Override
@@ -66,6 +69,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         forceRTLIfSupported();
         prefUtils = new PreferencesUtils(this);
         mUser =prefUtils.getUserFromPreferences();
+        mAnalyticsUtils = new AnalyticsUtils(this);
 
         //Log.d(TAG,"onCreate");
         setContentView(R.layout.activity_video);
@@ -243,6 +247,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         if((mUser != null && mUser.isApproved()) || clickedItemIndex != 0) {
             releasePlayer();
             mLesson = MainActivity.staticLesson.get(clickedItemIndex);
+            mAnalyticsUtils.logLesson(mLesson);
             initializePlayer(getUriToPlay());
         }else{
             Intent intent = new Intent(Intent.ACTION_VIEW);
