@@ -17,6 +17,8 @@ import java.util.Scanner;
 
 public class HttpGetTask extends AsyncTask <String ,Void,String> {
     private static final String TAG = "HTTP_GET_TASK";
+    private String result;
+    
     
 
     @Override
@@ -66,5 +68,15 @@ public class HttpGetTask extends AsyncTask <String ,Void,String> {
         }
 
         return str;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        result = s;
+    }
+
+    public String getResult() {
+        return result;
     }
 }
