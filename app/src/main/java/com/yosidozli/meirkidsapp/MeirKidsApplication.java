@@ -2,6 +2,8 @@ package com.yosidozli.meirkidsapp;
 
 import android.app.Application;
 
+import com.vimeo.networking.Configuration;
+
 //import com.onesignal.OneSignal;
 
 /**
@@ -24,4 +26,5 @@ public class MeirKidsApplication extends Application {
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();&*/
     }
+
 }
