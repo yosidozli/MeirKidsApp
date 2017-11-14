@@ -1,6 +1,7 @@
 package com.yosidozli.meirkidsapp;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -44,7 +45,7 @@ import java.util.List;
 
 import Utils.AnalyticsUtils;
 
-public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener {
+public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener ,VimeoUtilsSingleton.Listener {
     String mediaUri = "http://media3.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
     String notApprovedMediaUri = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 
@@ -60,6 +61,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     private User mUser;
     private PreferencesUtils prefUtils;
     private AnalyticsUtils mAnalyticsUtils;
+    private ProgressDialog mProgressDialog;
 
 
     @Override
@@ -70,6 +72,8 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         prefUtils = new PreferencesUtils(this);
         mUser =prefUtils.getUserFromPreferences();
         mAnalyticsUtils = new AnalyticsUtils(this);
+        mProgressDialog = new ProgressDialog(this);
+
 
         //Log.d(TAG,"onCreate");
         setContentView(R.layout.activity_video);
@@ -154,7 +158,9 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         super.onResume();
         //Log.d(TAG,"onResume");
         setScreenConfigurations(getResources().getConfiguration());
-        initializePlayer(getUriToPlay());
+        //todo use polimorphizem instead of casting
+        VimeoLesson.fetchFormVimeo((VimeoLesson) mLesson,VimeoUtilsSingleton.getInstance(this),this);
+      //  initializePlayer(getUriToPlay());
     }
 
     @Override
@@ -168,10 +174,16 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         if(mLesson.isForUsersOnly() ){
             //Log.d(TAG, "getUriToPlay: check if mUser is null "+(mUser == null));
             if(mUser ==null || !mUser.isApproved())
-             return Uri.parse(mediaUri+mLesson.getCropUrl());
+                return Uri.parse(mediaUri + mLesson.getCropUrl());
+
         }
+        String url = mLesson.getPostUrl();
         Log.d(TAG, "getUriToPlay: "+mediaUri);
-        Log.d(TAG, "getUriToPlay: "+mLesson.getPostUrl());
+        Log.d(TAG, "getUriToPlay: "+url);
+        if (mLesson.getPostUrl().contains("vimeo")) {
+            return Uri.parse( url);
+        }
+
         return Uri.parse(mediaUri+mLesson.getPostUrl());
 
     }
@@ -248,7 +260,9 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
             releasePlayer();
             mLesson = MainActivity.staticLesson.get(clickedItemIndex);
             mAnalyticsUtils.logLesson(mLesson);
-            initializePlayer(getUriToPlay());
+            //todo use polimorphizem instead of casting
+            VimeoLesson.fetchFormVimeo((VimeoLesson) mLesson,VimeoUtilsSingleton.getInstance(this),this);
+           // initializePlayer(getUriToPlay());
         }else{
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(getString(R.string.url_registration)));
@@ -262,5 +276,17 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+    }
+
+    @Override
+    public void downloadStarted() {
+        mProgressDialog.show();
+
+    }
+
+    @Override
+    public void finishedDownloading() {
+        mProgressDialog.hide();
+        initializePlayer(getUriToPlay());
     }
 }

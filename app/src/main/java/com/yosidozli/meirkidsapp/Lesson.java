@@ -18,14 +18,16 @@ public class Lesson implements Serializable {
     private String postUrl;
     private String cropUrl;
     private String lessonSetID;
+    private String vimeoId;
     private boolean forUsersOnly;
+
     transient private Bitmap image;
 
 
 
 
 
-    public Lesson(String title, String imageUrl, String setName, String postUrl, String cropUrl, String lessonSetID, boolean forUsersOnly) {
+    public Lesson(String title, String imageUrl, String setName, String postUrl, String cropUrl, String lessonSetID, boolean forUsersOnly,String vimeoId) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.setName = setName;
@@ -33,6 +35,7 @@ public class Lesson implements Serializable {
         this.cropUrl = cropUrl;
         this.lessonSetID = lessonSetID;
         this.forUsersOnly = forUsersOnly;
+        this.vimeoId = vimeoId;
        // setImage(imageUrl);
     }
 
@@ -101,5 +104,13 @@ public class Lesson implements Serializable {
 
     public void setLessonSetID(String lessonSetID) {
         this.lessonSetID = lessonSetID;
+    }
+
+    public String getVimeoId() {
+        return vimeoId;
+    }
+
+    public void setVimeoId(String vimeoId) {
+        this.vimeoId = vimeoId;
     }
 }

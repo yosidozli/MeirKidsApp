@@ -30,6 +30,7 @@ import static org.mockito.Mockito.*;
 
 import Utils.HttpGetTask;
 import Utils.ServerLogger;
+import Utils.ServerLoggerClient;
 
 @RunWith(AndroidJUnit4.class)
 public class HttpGetTest {
@@ -52,12 +53,16 @@ public class HttpGetTest {
         assertTrue(result.length()>10);
     }
 
+
+
+
     @Test
     public void testServerUserLogin(){
+
         String crmId = "5";
         String IP = "111.111.111.111";
         String serverIp ="http://crm.meirkids.co.il/api/app_login.asp";
-        ServerLogger serverLogger = new ServerLogger(serverIp);
+        ServerLoggerClient serverLogger = new ServerLoggerClient(serverIp);
         try {
             serverLogger.logUser(crmId,IP);
         } catch (Exception e) {
@@ -74,7 +79,7 @@ public class HttpGetTest {
         String crmId = "2";
         String IP = "111.111.111.111";
         String serverIp ="http://crm.meirkids.co.il/api/app_login.asp";
-        ServerLogger serverLogger = new ServerLogger(serverIp);
+        ServerLoggerClient serverLogger = new ServerLoggerClient(serverIp);
 
       //  exception.expect(Exception.class);
         exception.expectMessage(ServerLogger.LOG_FAILED);
