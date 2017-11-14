@@ -1,6 +1,7 @@
 package com.yosidozli.meirkidsapp;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -44,7 +46,7 @@ import java.util.List;
 
 import Utils.AnalyticsUtils;
 
-public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener {
+public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener ,VimeoUtilsSingleton.Listener {
     String mediaUri = "http://media3.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
     String notApprovedMediaUri = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 
@@ -60,6 +62,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     private User mUser;
     private PreferencesUtils prefUtils;
     private AnalyticsUtils mAnalyticsUtils;
+    private ProgressBar mProgressBar;
 
 
     @Override
@@ -71,10 +74,15 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         mUser =prefUtils.getUserFromPreferences();
         mAnalyticsUtils = new AnalyticsUtils(this);
 
+
+
+
         //Log.d(TAG,"onCreate");
         setContentView(R.layout.activity_video);
         mPlayerView = (SimpleExoPlayerView) findViewById(R.id.exoPlayerView);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar2);
         mLesson = (Lesson) getIntent().getSerializableExtra("Lesson");
+
 
         mLessonsList = (RecyclerView) findViewById(R.id.lesson_rv);
 
@@ -154,7 +162,9 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         super.onResume();
         //Log.d(TAG,"onResume");
         setScreenConfigurations(getResources().getConfiguration());
-        initializePlayer(getUriToPlay());
+        //todo use polimorphizem instead of casting
+        VimeoLesson.fetchFormVimeo((VimeoLesson) mLesson,VimeoUtilsSingleton.getInstance(this),this);
+      //  initializePlayer(getUriToPlay());
     }
 
     @Override
@@ -168,10 +178,16 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         if(mLesson.isForUsersOnly() ){
             //Log.d(TAG, "getUriToPlay: check if mUser is null "+(mUser == null));
             if(mUser ==null || !mUser.isApproved())
-             return Uri.parse(mediaUri+mLesson.getCropUrl());
+                return Uri.parse(mediaUri + mLesson.getCropUrl());
+
         }
-        Log.d(TAG, "getUriToPlay: "+mediaUri);
-        Log.d(TAG, "getUriToPlay: "+mLesson.getPostUrl());
+        String url = mLesson.getPostUrl();
+//        Log.d(TAG, "getUriToPlay: "+mediaUri);
+//        Log.d(TAG, "getUriToPlay: "+url);
+        if (mLesson.getPostUrl().contains("vimeo")) {
+            return Uri.parse( url);
+        }
+
         return Uri.parse(mediaUri+mLesson.getPostUrl());
 
     }
@@ -201,8 +217,11 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
 
                 @Override
                 public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-                    Log.d(TAG, "onPlayerStateChanged: "+mediaUri);
-
+//                    Log.d(TAG, "onPlayerStateChanged: "+mediaUri);
+                    if(playbackState == ExoPlayer.STATE_BUFFERING )
+                        mProgressBar.setVisibility(View.VISIBLE);
+                    else
+                        mProgressBar.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -248,7 +267,9 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
             releasePlayer();
             mLesson = MainActivity.staticLesson.get(clickedItemIndex);
             mAnalyticsUtils.logLesson(mLesson);
-            initializePlayer(getUriToPlay());
+            //todo use polimorphizem instead of casting
+            VimeoLesson.fetchFormVimeo((VimeoLesson) mLesson,VimeoUtilsSingleton.getInstance(this),this);
+           // initializePlayer(getUriToPlay());
         }else{
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(getString(R.string.url_registration)));
@@ -262,5 +283,18 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+    }
+
+    @Override
+    public void downloadStarted() {
+        mProgressBar.setVisibility(View.VISIBLE);
+
+
+    }
+
+    @Override
+    public void finishedDownloading() {
+        mProgressBar.setVisibility(View.GONE);
+        initializePlayer(getUriToPlay());
     }
 }

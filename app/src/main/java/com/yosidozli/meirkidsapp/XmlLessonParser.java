@@ -25,6 +25,7 @@ public class XmlLessonParser {
     private static final String USERS_ONLY= "ForUsersOnly";
     private static final String CROP_URL="VideoCrop";
     private static final String SET_ID="LessonSet_ID";
+    private static final String VIMEO_ID="VimeoID";
 
 
 
@@ -56,7 +57,10 @@ public class XmlLessonParser {
 
             if(name.equals(LESSON)) {
 
-                lessons.add(readLesson(parser));
+                Lesson lesson = readLesson(parser);
+                VimeoLesson vLesson = new VimeoLesson(lesson );
+
+                lessons.add(vLesson);
 
             }else {
                 skip(parser);
@@ -81,6 +85,7 @@ public class XmlLessonParser {
         String postUrl = null;
         String cropUrl = null;
         String lessonSetID = null;
+        String vimeoID = null;
         String usersOnly = null;
 
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -102,14 +107,16 @@ public class XmlLessonParser {
             }else if (name.equals(USERS_ONLY)) {
                  usersOnly  = readUsersOnly(parser);
             }else if (name.equals(SET_ID)) {
-                lessonSetID  = readLessonSetID(parser);
+                lessonSetID = readLessonSetID(parser);
+            }else if(name.equals(VIMEO_ID)){
+                vimeoID = readVimeoId(parser);
             } else {
                 skip(parser);
             }
 
         }
 
-        return new Lesson(title,imageUrl, setName,postUrl,cropUrl, lessonSetID, Boolean.valueOf(usersOnly));
+        return new Lesson(title,imageUrl, setName,postUrl,cropUrl, lessonSetID, Boolean.valueOf(usersOnly) ,vimeoID);
     }
 
     private String readUsersOnly(XmlPullParser parser) throws IOException, XmlPullParserException {
@@ -132,6 +139,14 @@ public class XmlLessonParser {
         parser.require(XmlPullParser.START_TAG,ns, VIDEO_URL);
         String postUrl = readText(parser);
         parser.require(XmlPullParser.END_TAG,ns, VIDEO_URL);
+        return postUrl;
+    }
+
+    private String readVimeoId(XmlPullParser parser) throws  IOException,XmlPullParserException{
+
+        parser.require(XmlPullParser.START_TAG,ns, VIMEO_ID);
+        String postUrl = readText(parser);
+        parser.require(XmlPullParser.END_TAG,ns, VIMEO_ID);
         return postUrl;
     }
 
