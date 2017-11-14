@@ -19,6 +19,7 @@ import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -61,7 +62,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     private User mUser;
     private PreferencesUtils prefUtils;
     private AnalyticsUtils mAnalyticsUtils;
-    private ProgressDialog mProgressDialog;
+    private ProgressBar mProgressBar;
 
 
     @Override
@@ -72,13 +73,16 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         prefUtils = new PreferencesUtils(this);
         mUser =prefUtils.getUserFromPreferences();
         mAnalyticsUtils = new AnalyticsUtils(this);
-        mProgressDialog = new ProgressDialog(this);
+
+
 
 
         //Log.d(TAG,"onCreate");
         setContentView(R.layout.activity_video);
         mPlayerView = (SimpleExoPlayerView) findViewById(R.id.exoPlayerView);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar2);
         mLesson = (Lesson) getIntent().getSerializableExtra("Lesson");
+
 
         mLessonsList = (RecyclerView) findViewById(R.id.lesson_rv);
 
@@ -178,8 +182,8 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
 
         }
         String url = mLesson.getPostUrl();
-        Log.d(TAG, "getUriToPlay: "+mediaUri);
-        Log.d(TAG, "getUriToPlay: "+url);
+//        Log.d(TAG, "getUriToPlay: "+mediaUri);
+//        Log.d(TAG, "getUriToPlay: "+url);
         if (mLesson.getPostUrl().contains("vimeo")) {
             return Uri.parse( url);
         }
@@ -213,8 +217,11 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
 
                 @Override
                 public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-                    Log.d(TAG, "onPlayerStateChanged: "+mediaUri);
-
+//                    Log.d(TAG, "onPlayerStateChanged: "+mediaUri);
+                    if(playbackState == ExoPlayer.STATE_BUFFERING )
+                        mProgressBar.setVisibility(View.VISIBLE);
+                    else
+                        mProgressBar.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -280,13 +287,14 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
 
     @Override
     public void downloadStarted() {
-        mProgressDialog.show();
+        mProgressBar.setVisibility(View.VISIBLE);
+
 
     }
 
     @Override
     public void finishedDownloading() {
-        mProgressDialog.hide();
+        mProgressBar.setVisibility(View.GONE);
         initializePlayer(getUriToPlay());
     }
 }
