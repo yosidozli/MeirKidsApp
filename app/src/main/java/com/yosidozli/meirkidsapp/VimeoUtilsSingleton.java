@@ -52,7 +52,7 @@ class VimeoUtilsSingleton {
     public void initialize(){
        Configuration.Builder builder = getAccessTokenBuilder();
        builder.enableCertPinning(false);
-       builder.setLogLevel(Vimeo.LogLevel.VERBOSE);
+       builder.setLogLevel(Vimeo.LogLevel.ERROR);
        VimeoClient.initialize(builder.build());
        mApiClient = VimeoClient.getInstance();
     }
