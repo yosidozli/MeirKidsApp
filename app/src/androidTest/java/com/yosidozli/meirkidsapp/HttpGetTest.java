@@ -64,7 +64,7 @@ public class HttpGetTest {
         String serverIp ="http://crm.meirkids.co.il/api/app_login.asp";
         ServerLoggerClient serverLogger = new ServerLoggerClient(serverIp);
         try {
-            serverLogger.logUser(crmId,IP);
+     //       serverLogger.logUser(crmId,IP);
         } catch (Exception e) {
             fail();
         }
@@ -84,7 +84,7 @@ public class HttpGetTest {
       //  exception.expect(Exception.class);
         exception.expectMessage(ServerLogger.LOG_FAILED);
         try {
-            serverLogger.logUser(crmId,IP);
+    //        serverLogger.logUser(crmId,IP);
         } catch (Exception e) {
             throw e;
         }

@@ -61,7 +61,7 @@ public class ServerLoggerClientTest {
             }
         }).when(serverLogger).logUser(eq("1111"),eq("31312"),Mockito.any(Callback.class));
 
-        serverLoggerC.logUser("1111","31312");
+        //serverLoggerC.logUser("1111","31312");
 
         verify(serverLogger, times(1)).logUser(eq("1111"),eq("31312"),Mockito.any(Callback.class));
 
@@ -78,7 +78,7 @@ public class ServerLoggerClientTest {
         }).when(serverLogger).logUser(eq("2222"),eq("31312"),Mockito.any(Callback.class));
 
         try {
-            serverLoggerC.logUser("2222","31312");
+          //  serverLoggerC.logUser("2222","31312");
         } catch (Exception e) {
 
         }

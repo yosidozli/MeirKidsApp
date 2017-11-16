@@ -18,7 +18,7 @@ public class ServerLoggerClient implements Callback {
 
     }
 
-    public void logUser(String id ,String ip) throws Exception {
+    public void logUser(String id ,String ip , Listener listener) throws Exception {
 
         try {
             serverLogger.logUser(id, ip,this);
@@ -40,6 +40,11 @@ public class ServerLoggerClient implements Callback {
     public void onFail()  {
         exception = true;
 
+    }
+
+    public static interface Listener {
+        public void startLogging();
+        public void finisheLogging();
     }
 }
 
