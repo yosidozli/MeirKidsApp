@@ -45,6 +45,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import Utils.AnalyticsUtils;
+import Utils.MyLogger;
 
 public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener ,VimeoUtilsSingleton.Listener {
     String mediaUri = "http://media3.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
@@ -63,6 +64,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     private PreferencesUtils prefUtils;
     private AnalyticsUtils mAnalyticsUtils;
     private ProgressBar mProgressBar;
+    private MyLogger logger;
 
 
     @Override
@@ -73,8 +75,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         prefUtils = new PreferencesUtils(this);
         mUser =prefUtils.getUserFromPreferences();
         mAnalyticsUtils = new AnalyticsUtils(this);
-
-
+        logger = new MyLogger();
 
 
         //Log.d(TAG,"onCreate");
@@ -267,6 +268,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
             releasePlayer();
             mLesson = MainActivity.staticLesson.get(clickedItemIndex);
             mAnalyticsUtils.logLesson(mLesson);
+            logger.logLessonChosen(String.valueOf(mUser.getPersonId()),mLesson.getId());
             //todo use polimorphizem instead of casting
             VimeoLesson.fetchFormVimeo((VimeoLesson) mLesson,VimeoUtilsSingleton.getInstance(this),this);
            // initializePlayer(getUriToPlay());

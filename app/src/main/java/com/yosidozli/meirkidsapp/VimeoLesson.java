@@ -33,7 +33,7 @@ public class VimeoLesson extends Lesson {
     private ModelCallback<Video> callback;
 
     public VimeoLesson(Lesson lesson ) {
-        super(lesson.getTitle(), lesson.getImageUrl(),lesson.getSetName(),lesson.getPostUrl(), lesson.getCropUrl(), lesson.getLessonSetID(), lesson.isForUsersOnly() ,lesson.getVimeoId());
+        super(lesson.getId(),lesson.getTitle(), lesson.getImageUrl(),lesson.getSetName(),lesson.getPostUrl(), lesson.getCropUrl(), lesson.getLessonSetID(), lesson.isForUsersOnly() ,lesson.getVimeoId());
 
 
         this.lesson = lesson;

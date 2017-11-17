@@ -63,6 +63,21 @@ public class NetworkUtils implements Runnable {
 
     }
 
+    public void doGet(String urlString){
+        ResponseListener<Object> stubListener = new ResponseListener<Object>() {
+            @Override
+            public void downloadStarted() {
+
+            }
+
+            @Override
+            public void finishedDownloading(Object result) {
+
+            }
+        };
+        doGet(urlString,stubListener);
+    }
+
     @Override
     public void run() {
         try {
