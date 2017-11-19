@@ -26,6 +26,7 @@ public class XmlLessonParser {
     private static final String CROP_URL="VideoCrop";
     private static final String SET_ID="LessonSet_ID";
     private static final String VIMEO_ID="VimeoID";
+    private static final String IDX = "Idx";
 
 
 
@@ -78,7 +79,7 @@ public class XmlLessonParser {
 
     private Lesson readLesson(XmlPullParser parser) throws XmlPullParserException,IOException{
         parser.require(XmlPullParser.START_TAG,ns,LESSON );
-
+        String id = null;
         String title = null;
         String imageUrl = null;
         String setName = null;
@@ -96,7 +97,9 @@ public class XmlLessonParser {
             String name = parser.getName();
             if (name.equals(TITLE)) {
                 title = readTitle(parser);
-            } else if (name.equals(VIDEO_URL)) {
+            }else if(name.equals(IDX)){
+                id = readID(parser);
+            }else if (name.equals(VIDEO_URL)) {
                 postUrl = readPostUrl(parser);
             } else if (name.equals(CROP_URL)) {
                 cropUrl = readCropUrl(parser);
@@ -116,7 +119,14 @@ public class XmlLessonParser {
 
         }
 
-        return new Lesson(title,imageUrl, setName,postUrl,cropUrl, lessonSetID, Boolean.valueOf(usersOnly) ,vimeoID);
+        return new Lesson(id,title,imageUrl, setName,postUrl,cropUrl, lessonSetID, Boolean.valueOf(usersOnly) ,vimeoID);
+    }
+
+    private String readID(XmlPullParser parser) throws IOException, XmlPullParserException  {
+        parser.require(XmlPullParser.START_TAG,ns,IDX);
+        String title = readText(parser);
+        parser.require(XmlPullParser.END_TAG,ns,IDX);
+        return title;
     }
 
     private String readUsersOnly(XmlPullParser parser) throws IOException, XmlPullParserException {

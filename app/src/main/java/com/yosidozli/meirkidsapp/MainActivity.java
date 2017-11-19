@@ -58,6 +58,7 @@ import java.util.Date;
 import java.util.List;
 
 import Utils.AnalyticsUtils;
+import Utils.MyLogger;
 
 
 public class MainActivity extends AppCompatActivity implements AboutFragment.OnFragmentInteractionListener,
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
     private LoginTask mLoginTask;
     private DownloadLessonsXmlTask mDownloadLessonXmlTask;
     private AnalyticsUtils mAnalyticsUtils;
+    private MyLogger logger;
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
@@ -131,6 +133,8 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
                 mDownloadLessonXmlTask.cancel(false);
             chosedLessonTitle = lessons.get(clickedItemIndex).getTitle();
             mAnalyticsUtils.logLesson(lessons.get(clickedItemIndex));
+            if(mUser!= null && mUser.isApproved())
+                logger.logLessonChosen(String.valueOf(mUser.getPersonId()),lessons.get(clickedItemIndex).getId());
             mDownloadLessonXmlTask =  new DownloadLessonsXmlTask();
            mDownloadLessonXmlTask.execute(URL,lessons.get(clickedItemIndex).getLessonSetID());
 
@@ -167,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
         setContentView(R.layout.loading_layout);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAnalyticsUtils = new AnalyticsUtils(this);
-
+        logger = new MyLogger();
 
         ;//.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.bar_logo));
 
@@ -762,6 +766,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
 
                 bundle.putString("user_connection_date",df.format(new Date()));
                 mFirebaseAnalytics.logEvent("user_login", bundle);
+                logger.logUserLogin(String.valueOf(mUser.getPersonId()));
 
 
             }
@@ -896,6 +901,8 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
                     DateFormat df = SimpleDateFormat.getDateInstance();
                     bundle.putString("user_connection_date",df.format (new Date()));
                     mFirebaseAnalytics.logEvent("user_login", bundle);
+                    logger.logUserLogin(String.valueOf(mUser.getPersonId()));
+
 
                     return true;
                 }

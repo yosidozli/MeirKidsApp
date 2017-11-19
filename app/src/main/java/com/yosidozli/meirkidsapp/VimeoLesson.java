@@ -1,8 +1,13 @@
 package com.yosidozli.meirkidsapp;
 
+import android.util.Log;
+
 import com.vimeo.networking.callbacks.ModelCallback;
 import com.vimeo.networking.model.Video;
+import com.vimeo.networking.model.VideoFile;
 import com.vimeo.networking.model.error.VimeoError;
+
+import java.util.Collections;
 
 /**
  * Created by yosid on 10/11/2017.
@@ -28,7 +33,7 @@ public class VimeoLesson extends Lesson {
     private ModelCallback<Video> callback;
 
     public VimeoLesson(Lesson lesson ) {
-        super(lesson.getTitle(), lesson.getImageUrl(),lesson.getSetName(),lesson.getPostUrl(), lesson.getCropUrl(), lesson.getLessonSetID(), lesson.isForUsersOnly() ,lesson.getVimeoId());
+        super(lesson.getId(),lesson.getTitle(), lesson.getImageUrl(),lesson.getSetName(),lesson.getPostUrl(), lesson.getCropUrl(), lesson.getLessonSetID(), lesson.isForUsersOnly() ,lesson.getVimeoId());
 
 
         this.lesson = lesson;
@@ -64,7 +69,17 @@ public class VimeoLesson extends Lesson {
 
             @Override
             public void success(Video video) {
-                vimeoLesson.setVimeoLink(video.getDownload().get(1).getLink());
+                int width = 0;
+                String link = video.getDownload().get(0).getLink();
+
+                for(VideoFile v : video.getDownload()){
+                    if(v.getType().equals( VideoFile.MimeType.MP4) && v.getWidth() > width){
+                        width = v.getWidth();
+                        link = v.getLink();
+                    }
+                }
+
+                vimeoLesson.setVimeoLink(link);
                 listener.finishedDownloading();
             }
 

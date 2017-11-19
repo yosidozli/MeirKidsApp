@@ -12,6 +12,7 @@ import java.net.URL;
  */
 
 public class Lesson implements Serializable {
+    private String id;
     private String title;
     private String imageUrl;
     private String setName;
@@ -27,7 +28,8 @@ public class Lesson implements Serializable {
 
 
 
-    public Lesson(String title, String imageUrl, String setName, String postUrl, String cropUrl, String lessonSetID, boolean forUsersOnly,String vimeoId) {
+    public Lesson(String id, String title, String imageUrl, String setName, String postUrl, String cropUrl, String lessonSetID, boolean forUsersOnly,String vimeoId) {
+        this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;
         this.setName = setName;
@@ -112,5 +114,13 @@ public class Lesson implements Serializable {
 
     public void setVimeoId(String vimeoId) {
         this.vimeoId = vimeoId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

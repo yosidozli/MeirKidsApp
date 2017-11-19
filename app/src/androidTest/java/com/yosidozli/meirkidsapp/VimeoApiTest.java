@@ -3,6 +3,7 @@ package com.yosidozli.meirkidsapp;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.vimeo.networking.Configuration;
 import com.vimeo.networking.VimeoClient;
@@ -141,6 +142,7 @@ public class VimeoApiTest {
         ModelCallback<Video> callback = new ModelCallback<Video>(Video.class) {
             @Override
             public void success(Video video) {
+
                 videoFiles.addAll(video.getDownload());
                 synchronized (this) {
                     notifyAll();
@@ -162,7 +164,13 @@ public class VimeoApiTest {
                 e.printStackTrace();
             }
 
+            for (VideoFile v: videoFiles){
+                Log.d(TAG, "testFetchVideoFilesFromLesson: "+v.getQuality());
+                Log.d(TAG, "testFetchVideoFilesFromLesson: "+v.getSize());
+                Log.d(TAG, "testFetchVideoFilesFromLesson: "+v.getType());
+                Log.d(TAG, "testFetchVideoFilesFromLesson: "+v.getWidth());
 
+            }
             assertEquals(5, videoFiles.size());
 
         }
