@@ -42,12 +42,12 @@
     <string name="pref_key_last_viewed" translatable="false">Lest Lesson Viewed</string>
 
 
-    <string name="url_user_validation" translatable="false">http://82.80.198.104/UserValidationServiceWebGet/UserValidationService.svc/IsUserValid</string>
+    <string name="url_user_validation" translatable="false">https://82.80.198.104/UserValidationServiceWebGet/UserValidationService.svc/IsUserValid</string>
     <string name="url_registration" translatable="false"> https://reg.meirkids.co.il/</string>
     <string name="url_contact" translatable="false">"http://meirkids.co.il/Contact</string>
-    <string name="url_check_version" translatable="false">http://meirkids.co.il/app/v.html</string>
-    <string name="url_meirkids_website" translatable="false">http://meirkids.co.il</string>
-    <string name="url_about" translatable="false">http://meirkids.co.il/אודות/</string>
+    <string name="url_check_version" translatable="false">https://meirkids.co.il/app/v.html</string>
+    <string name="url_meirkids_website" translatable="false">https://meirkids.co.il</string>
+    <string name="url_about" translatable="false">https://meirkids.co.il/אודות/</string>
 
     <string name="message_url_registration" translatable="false"><a href=" https://reg.meirkids.co.il/">Register</a></string>
     <string name="text_content_about_title">About</string>

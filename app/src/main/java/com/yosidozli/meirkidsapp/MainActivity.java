@@ -57,6 +57,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import Utils.AnalyticsUtils;
 import Utils.MyLogger;
 
@@ -68,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
     private final static String TAG = "MainActivity";
     public static final String WIFI = "Wi-Fi";
     public static final String ANY = "Any";
-    private static final String URL ="http://meirkids.co.il/temp/xmlLessonesKids/lessons.asp";//?ContentType=1";// "http://meirkids.co.il/Tools/TopContentsToMeirtvX/?setType=0&contentType=1&count=5000";
-    private static final String SETS_URL ="http://meirkids.co.il/temp/xmlLessonesKids/sets.asp";
+    private static final String URL ="https://meirkids.co.il/temp/xmlLessonesKids/lessons.asp";//?ContentType=1";// "http://meirkids.co.il/Tools/TopContentsToMeirtvX/?setType=0&contentType=1&count=5000";
+    private static final String SETS_URL ="https://meirkids.co.il/temp/xmlLessonesKids/sets.asp";
     private static final int USER_TAB_INT = 2;
     private static final int SETS_TAB_INT = 1;
     private static final int LAST_TAB_INT = 0;
@@ -589,7 +591,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
         private InputStream downloadUrl(String urlString) throws IOException {
             String fullUrl = Uri.parse(urlString).buildUpon().appendQueryParameter("ContentType","1").build().toString();
             URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setReadTimeout(10000 /* milliseconds */);
             conn.setConnectTimeout(15000 /* milliseconds */);
             conn.setRequestMethod("GET");
