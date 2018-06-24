@@ -43,6 +43,7 @@ import com.yosidozli.meirkidsapp.registration.User;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Objects;
 
 import Utils.AnalyticsUtils;
 import Utils.MyLogger;
@@ -268,7 +269,8 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
             releasePlayer();
             mLesson = MainActivity.staticLesson.get(clickedItemIndex);
             mAnalyticsUtils.logLesson(mLesson);
-            logger.logLessonChosen(String.valueOf(mUser.getPersonId()),mLesson.getId());
+            if(mUser != null)
+                logger.logLessonChosen(String.valueOf(mUser.getPersonId()),mLesson.getId());
             //todo use polimorphizem instead of casting
             VimeoLesson.fetchFormVimeo((VimeoLesson) mLesson,VimeoUtilsSingleton.getInstance(this),this);
            // initializePlayer(getUriToPlay());
