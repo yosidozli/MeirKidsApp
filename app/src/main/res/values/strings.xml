@@ -42,7 +42,7 @@
     <string name="pref_key_last_viewed" translatable="false">Lest Lesson Viewed</string>
 
 
-    <string name="url_user_validation" translatable="false">https://82.80.198.104/UserValidationServiceWebGet/UserValidationService.svc/IsUserValid</string>
+    <string name="url_user_validation" translatable="false">http://82.80.198.104/UserValidationServiceWebGet/UserValidationService.svc/IsUserValid</string>
     <string name="url_registration" translatable="false"> https://reg.meirkids.co.il/</string>
     <string name="url_contact" translatable="false">"http://meirkids.co.il/Contact</string>
     <string name="url_check_version" translatable="false">https://meirkids.co.il/app/v.html</string>

@@ -5,10 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.transition.CircularPropagation;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +25,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.TransitionOptions;
 import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.module.AppGlideModule;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.BitmapTransitionFactory;
 
 import java.io.IOException;
@@ -117,20 +124,39 @@ public class LessonSetAdapter extends RecyclerView.Adapter<LessonSetAdapter.Less
             this.imageUrl = lessonSet.getSmallImagePath();
             this.position = position;
             this.lessonSet = lessonSet;
+            imageView.setVisibility(View.VISIBLE);
 
-            if(lessonSet.getImage() == null) {
-                /*progressBar.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
-                GlideApp.with((Context) mListItemClickListener).load(lessonSet.getBigImagePath()).centerCrop()
-                        .placeholder(new ColorDrawable(Color.DKGRAY)).into(imageView);*/
-                new DownloadImageTask().execute(this);
-            }
 
-            else{
-                imageView.setImageBitmap(lessonSet.getImage());
-                progressBar.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
-            }
+
+
+            GlideApp.with(itemView).load(imageUrl).centerCrop().listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+
+                    return false;
+                }
+            }).into(imageView);
+//            if(lessonSet.getImage() == null) {
+//                /*progressBar.setVisibility(View.GONE);
+//                imageView.setVisibility(View.VISIBLE);
+//                GlideApp.with((Context) mListItemClickListener).load(lessonSet.getBigImagePath()).centerCrop()
+//                        .placeholder(new ColorDrawable(Color.DKGRAY)).into(imageView);*/
+//                new DownloadImageTask().execute(this);
+//            }
+//
+//            else{
+//                imageView.setImageBitmap(lessonSet.getImage());
+//                progressBar.setVisibility(View.GONE);
+//                imageView.setVisibility(View.VISIBLE);
+//            }
 
 
 
