@@ -47,6 +47,7 @@ import java.util.Objects;
 
 import Utils.AnalyticsUtils;
 import Utils.MyLogger;
+import yosidozli.com.utils.PersistentLruCache;
 
 public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener ,VimeoUtilsSingleton.Listener {
     String mediaUri = "http://media3.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
@@ -66,7 +67,9 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     private AnalyticsUtils mAnalyticsUtils;
     private ProgressBar mProgressBar;
     private MyLogger logger;
-
+    private PersistentLruCache<Long,String> linksCache;
+    public static final String LINKS_CACHE_NAME = "video_activity_cache";
+    public static final int CACHE_SIZE = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,11 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         mAnalyticsUtils = new AnalyticsUtils(this);
         logger = new MyLogger();
 
+        try {
+            linksCache = PersistentLruCache.createCachefromFile(this,LINKS_CACHE_NAME,CACHE_SIZE);
+        } catch (ClassNotFoundException e) {
+            linksCache = new PersistentLruCache<Long, String>(CACHE_SIZE);
+        }
 
         //Log.d(TAG,"onCreate");
         setContentView(R.layout.activity_video);
@@ -139,6 +147,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     protected void onDestroy() {
         //Log.d(TAG,"onDestroy");
         releasePlayer();
+        linksCache.persist(this,LINKS_CACHE_NAME);
         super.onDestroy();
 
     }
@@ -165,8 +174,24 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         //Log.d(TAG,"onResume");
         setScreenConfigurations(getResources().getConfiguration());
         //todo use polimorphizem instead of casting
-        VimeoLesson.fetchFormVimeo((VimeoLesson) mLesson,VimeoUtilsSingleton.getInstance(this),this);
+        fetchLessonUrl();
       //  initializePlayer(getUriToPlay());
+    }
+
+    private void fetchLessonUrl(){
+//        Log.d(TAG, "fetchLessonUrl: search in cache "+" "+mLesson.getId());
+
+        if(linksCache.get(Long.valueOf(mLesson.getId())) != null){
+            ((VimeoLesson)mLesson).setVimeoLink(linksCache.get(Long.valueOf(mLesson.getId())));
+//            Log.d(TAG, "fetchLessonUrl: get from cache "+" "+mLesson.getPostUrl());
+            finishedDownloading(true);
+
+        }
+        else {
+//            Log.d(TAG, "fetchLessonUrl: not in cache "+" "+mLesson.getId());
+            VimeoLesson.fetchFormVimeo((VimeoLesson) mLesson, VimeoUtilsSingleton.getInstance(this), this);
+        }
+
     }
 
     @Override
@@ -271,8 +296,8 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
             mAnalyticsUtils.logLesson(mLesson);
             if(mUser != null)
                 logger.logLessonChosen(String.valueOf(mUser.getPersonId()),mLesson.getId());
-            //todo use polimorphizem instead of casting
-            VimeoLesson.fetchFormVimeo((VimeoLesson) mLesson,VimeoUtilsSingleton.getInstance(this),this);
+            fetchLessonUrl();
+
            // initializePlayer(getUriToPlay());
         }else{
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -297,8 +322,12 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     }
 
     @Override
-    public void finishedDownloading() {
+    public void finishedDownloading(boolean fromCache) {
         mProgressBar.setVisibility(View.GONE);
+        if(!fromCache) {
+            linksCache.put(Long.parseLong(mLesson.getId()), mLesson.getPostUrl());
+//            Log.d(TAG, "finishedDownloading: put in cache "+mLesson.getId()+" "+mLesson.getPostUrl());
+        }
         initializePlayer(getUriToPlay());
     }
 }

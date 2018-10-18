@@ -34,6 +34,7 @@
     <string name="menu_register">Register</string>
     <string name="menu_contact_us">Contact Us</string>
     <string name="menu_meir_kids_web">Go To Website</string>
+    <string name="menu_privacy_policy">App Policy</string>
 
     <string name="user_preferences" translatable="false">userPref</string>
     <string name="pref_key_user" translatable="false">User</string>
@@ -47,6 +48,7 @@
     <string name="url_contact" translatable="false">"http://meirkids.co.il/Contact</string>
     <string name="url_check_version" translatable="false">https://meirkids.co.il/app/v.html</string>
     <string name="url_meirkids_website" translatable="false">https://meirkids.co.il</string>
+    <string name="url_policy" translatable="false">https://meirkids.co.il/page?idx=85480</string>
     <string name="url_about" translatable="false">https://meirkids.co.il/אודות/</string>
 
     <string name="message_url_registration" translatable="false"><a href=" https://reg.meirkids.co.il/">Register</a></string>

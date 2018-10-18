@@ -337,6 +337,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
         startActivity(intent);
     }
 
+
     private void showConnectDialog(){
         DialogFragment newFragment = new ConnectDialog();
         newFragment.show(getSupportFragmentManager(),"connect_dialog");
@@ -733,6 +734,12 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
             case  R.id.menu_meirkids_web:{
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(getString(R.string.url_meirkids_website)));
+                startActivity(intent);
+                break;
+            }
+            case  R.id.menu_privacy_policy:{
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.url_policy)));
                 startActivity(intent);
                 break;
             }

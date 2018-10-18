@@ -64,6 +64,7 @@ public class VimeoLesson extends Lesson {
         listener.downloadStarted();
     }
 
+
     public static void fetchFormVimeo(final VimeoLesson vimeoLesson, VimeoUtilsSingleton utilsSingleton,final VimeoUtilsSingleton.Listener listener){
         ModelCallback<Video> modelCallback = new ModelCallback<Video>(Video.class){
 
@@ -80,18 +81,19 @@ public class VimeoLesson extends Lesson {
                 }
 
                 vimeoLesson.setVimeoLink(link);
-                listener.finishedDownloading();
+                listener.finishedDownloading(false);
             }
 
             @Override
             public void failure(VimeoError error) {
-                listener.finishedDownloading();
+                Log.e("VIMEO_ERROR", "failure: "+error.getDeveloperMessage() );
+                listener.finishedDownloading(false);
             }
         };
         if(vimeoLesson.getVimeoLink() == null)
             fetchFromVimeo(vimeoLesson,utilsSingleton,listener,modelCallback);
         else
-            listener.finishedDownloading();
+            listener.finishedDownloading(false);
 
     }
 

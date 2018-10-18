@@ -99,6 +99,6 @@ class VimeoUtilsSingleton {
 
     public static interface Listener{
         public void downloadStarted();
-        public void finishedDownloading();
+        public void finishedDownloading(boolean fromCache);
     }
 }

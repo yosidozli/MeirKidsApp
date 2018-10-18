@@ -13,6 +13,9 @@
     <item android:id="@+id/menu_meirkids_web"
         android:title="@string/menu_meir_kids_web"
         app:showAsAction="never"/>
+    <item android:id="@+id/menu_privacy_policy"
+        android:title="@string/menu_privacy_policy"
+        app:showAsAction="never"/>
 
 
 </menu>

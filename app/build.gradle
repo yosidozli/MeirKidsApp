@@ -8,8 +8,8 @@ android {
         applicationId "com.yosidozli.meirkidsapp"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 6
-        versionName "1.4.2"
+        versionCode 7
+        versionName "1.4.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "b12daa49-d8b1-4235-9420-876f5a55348f",
                                 // Project number pulled from dashboard, local value is ignored.
@@ -29,6 +29,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    implementation project(":vimeocache-debug")
 
     //compile 'com.onesignal:OneSignal:[3.5.3,4.0.0)'
     compile 'com.android.support:appcompat-v7:25.3.1'
