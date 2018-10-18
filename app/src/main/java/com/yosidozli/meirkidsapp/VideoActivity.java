@@ -1,23 +1,16 @@
 package com.yosidozli.meirkidsapp;
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.OrientationEventListener;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
@@ -40,14 +33,10 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.yosidozli.meirkidsapp.registration.User;
 
-import java.io.InputStream;
-import java.sql.Connection;
-import java.util.List;
-import java.util.Objects;
+import yosidozli.com.utils.PersistentLruCache;
 
 import Utils.AnalyticsUtils;
 import Utils.MyLogger;
-import yosidozli.com.utils.PersistentLruCache;
 
 public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener ,VimeoUtilsSingleton.Listener {
     String mediaUri = "http://media3.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
@@ -67,9 +56,10 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     private AnalyticsUtils mAnalyticsUtils;
     private ProgressBar mProgressBar;
     private MyLogger logger;
+
     private PersistentLruCache<Long,String> linksCache;
-    public static final String LINKS_CACHE_NAME = "video_activity_cache";
-    public static final int CACHE_SIZE = 5;
+    public static final String LINKS_CACHE_NAME = "video_activity_cache"+BuildConfig.VERSION_CODE;
+    public static final int CACHE_SIZE = 40;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +71,11 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         mAnalyticsUtils = new AnalyticsUtils(this);
         logger = new MyLogger();
 
-        try {
-            linksCache = PersistentLruCache.createCachefromFile(this,LINKS_CACHE_NAME,CACHE_SIZE);
-        } catch (ClassNotFoundException e) {
-            linksCache = new PersistentLruCache<Long, String>(CACHE_SIZE);
-        }
+
+
+        linksCache = PersistentLruCache.createCachefromFile(this,LINKS_CACHE_NAME,CACHE_SIZE) ;
+
+
 
         //Log.d(TAG,"onCreate");
         setContentView(R.layout.activity_video);

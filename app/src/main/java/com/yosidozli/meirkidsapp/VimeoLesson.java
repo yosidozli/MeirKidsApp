@@ -87,9 +87,11 @@ public class VimeoLesson extends Lesson {
             @Override
             public void failure(VimeoError error) {
                 Log.e("VIMEO_ERROR", "failure: "+error.getDeveloperMessage() );
-                listener.finishedDownloading(false);
+                listener.finishedDownloading(true);
             }
         };
+
+
         if(vimeoLesson.getVimeoLink() == null)
             fetchFromVimeo(vimeoLesson,utilsSingleton,listener,modelCallback);
         else
