@@ -763,7 +763,6 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
         if(requestCode == LOGIN_REQUEST){
             if(resultCode == AppCompatActivity.RESULT_OK){
                 mUser = prefUtils.getUserFromPreferences();
-                //TODO change text to string resource
                 mLoginMenuItem.setTitle(getString(R.string.menu_logout));
                 Toast.makeText(MainActivity.this,getString( R.string.toast_login,mUser.getFirstName()),Toast.LENGTH_LONG).show();
                 prompt_to_connect = false;

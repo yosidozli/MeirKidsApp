@@ -272,9 +272,11 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //Log.d(TAG,"onSavedInstanceState");
-        position = mPlayer.getCurrentPosition();
+
+        position = mPlayer != null? mPlayer.getCurrentPosition():0;
         outState.putLong(POSITION,position);
-        mPlayer.setPlayWhenReady(false);
+        if(mPlayer != null)
+            mPlayer.setPlayWhenReady(false);
         super.onSaveInstanceState(outState);
     }
 

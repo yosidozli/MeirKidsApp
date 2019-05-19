@@ -7,7 +7,6 @@ import com.vimeo.networking.Configuration;
 import com.vimeo.networking.Vimeo;
 import com.vimeo.networking.VimeoClient;
 import com.vimeo.networking.callbacks.ModelCallback;
-import com.vimeo.networking.callbacks.VimeoCallback;
 import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoFile;
 import com.vimeo.networking.model.error.VimeoError;
@@ -45,7 +44,8 @@ class VimeoUtilsSingleton {
     }
 
     public Configuration.Builder getAccessTokenBuilder(){
-        String accessToken = "e9a39063cb6bc99f012f97612918114b";
+        //String accessToken = "e9a39063cb6bc99f012f97612918114b";
+        String accessToken = "e22d6459a925782c77cab70224fa5d45";
         return new Configuration.Builder(accessToken);
     }
 
