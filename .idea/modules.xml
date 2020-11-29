@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MeirKidsApp.iml" filepath="$PROJECT_DIR$/MeirKidsApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/vimeocache-debug/vimeocache-debug.iml" filepath="$PROJECT_DIR$/vimeocache-debug/vimeocache-debug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/vimeocache-debug/MeirKidsApp.vimeocache-debug.iml" filepath="$PROJECT_DIR$/.idea/modules/vimeocache-debug/MeirKidsApp.vimeocache-debug.iml" />
     </modules>
   </component>
 </project>
