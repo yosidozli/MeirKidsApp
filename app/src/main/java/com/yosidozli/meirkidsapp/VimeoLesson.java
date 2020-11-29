@@ -7,8 +7,6 @@ import com.vimeo.networking.model.Video;
 import com.vimeo.networking.model.VideoFile;
 import com.vimeo.networking.model.error.VimeoError;
 
-import java.util.Collections;
-
 /**
  * Created by yosid on 10/11/2017.
  */
@@ -33,7 +31,7 @@ public class VimeoLesson extends Lesson {
     private ModelCallback<Video> callback;
 
     public VimeoLesson(Lesson lesson ) {
-        super(lesson.getId(),lesson.getTitle(), lesson.getImageUrl(),lesson.getSetName(),lesson.getPostUrl(), lesson.getCropUrl(), lesson.getLessonSetID(), lesson.isForUsersOnly() ,lesson.getVimeoId());
+        super(lesson.getId(),lesson.getTitle(), lesson.getImageUrl(),lesson.getSetName(),lesson.getPostUrl(), lesson.getCropUrl(), lesson.getLessonSetID(), lesson.isForUsersOnly() ,lesson.getVimeoId(),null);
 
 
         this.lesson = lesson;

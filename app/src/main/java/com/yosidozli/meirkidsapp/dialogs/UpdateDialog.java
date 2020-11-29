@@ -1,14 +1,13 @@
 package com.yosidozli.meirkidsapp.dialogs;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 import com.yosidozli.meirkidsapp.R;
 
@@ -33,7 +32,7 @@ public class UpdateDialog extends DialogFragment {
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public AlertDialog onCreateDialog(Bundle savedInstanceState) {
         setStrings(R.string.update_dialog_title,R.string.update_dialog_message,R.string.update_dialog_update,R.string.update_dialog_cancel);
 
         return  createDialog( new DialogInterface.OnClickListener() {

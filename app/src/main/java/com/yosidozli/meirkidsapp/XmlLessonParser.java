@@ -1,5 +1,6 @@
 package com.yosidozli.meirkidsapp;
 
+import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -27,6 +28,9 @@ public class XmlLessonParser {
     private static final String SET_ID="LessonSet_ID";
     private static final String VIMEO_ID="VimeoID";
     private static final String IDX = "Idx";
+    private static final String VIDEO_MP4 = "VideoMp4";
+    private static final String CLOUDFLARE = "CloudFlare";
+
 
 
 
@@ -88,11 +92,12 @@ public class XmlLessonParser {
         String lessonSetID = null;
         String vimeoID = null;
         String usersOnly = null;
+        String mp4Url = null;
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG)
                 continue;
-
+            Log.d("parser", "readLesson: "+mp4Url);
 
             String name = parser.getName();
             if (name.equals(TITLE)) {
@@ -113,13 +118,17 @@ public class XmlLessonParser {
                 lessonSetID = readLessonSetID(parser);
             }else if(name.equals(VIMEO_ID)){
                 vimeoID = readVimeoId(parser);
+            }else if(name.equals(VIDEO_MP4)){
+                mp4Url = readMp4Url(parser);
+
             } else {
                 skip(parser);
             }
 
         }
 
-        return new Lesson(id,title,imageUrl, setName,postUrl,cropUrl, lessonSetID, Boolean.valueOf(usersOnly) ,vimeoID);
+        return new Lesson(id,title,imageUrl, setName,postUrl,cropUrl, lessonSetID, Boolean.valueOf(usersOnly) ,
+                vimeoID, mp4Url);
     }
 
     private String readID(XmlPullParser parser) throws IOException, XmlPullParserException  {
@@ -157,6 +166,14 @@ public class XmlLessonParser {
         parser.require(XmlPullParser.START_TAG,ns, VIMEO_ID);
         String postUrl = readText(parser);
         parser.require(XmlPullParser.END_TAG,ns, VIMEO_ID);
+        return postUrl;
+    }
+
+    private String readMp4Url(XmlPullParser parser) throws  IOException,XmlPullParserException{
+
+        parser.require(XmlPullParser.START_TAG,ns, VIDEO_MP4);
+        String postUrl = readText(parser);
+        parser.require(XmlPullParser.END_TAG,ns, VIDEO_MP4);
         return postUrl;
     }
 

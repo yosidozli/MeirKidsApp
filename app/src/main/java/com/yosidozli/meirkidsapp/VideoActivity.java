@@ -6,13 +6,14 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -33,10 +34,9 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.yosidozli.meirkidsapp.registration.User;
 
-import yosidozli.com.utils.PersistentLruCache;
-
 import Utils.AnalyticsUtils;
 import Utils.MyLogger;
+import yosidozli.com.utils.PersistentLruCache;
 
 public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener ,VimeoUtilsSingleton.Listener {
     String mediaUri = "http://media3.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
@@ -164,8 +164,9 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         //Log.d(TAG,"onResume");
         setScreenConfigurations(getResources().getConfiguration());
         //todo use polimorphizem instead of casting
-        fetchLessonUrl();
-      //  initializePlayer(getUriToPlay());
+//        fetchLessonUrl();
+        Log.d(TAG, "onResume: "+mLesson.getMp4Url());
+        initializePlayer(Uri.parse(mLesson.getMp4Url()));
     }
 
     private void fetchLessonUrl(){
@@ -201,11 +202,12 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         String url = mLesson.getPostUrl();
 //        Log.d(TAG, "getUriToPlay: "+mediaUri);
 //        Log.d(TAG, "getUriToPlay: "+url);
-        if (mLesson.getPostUrl().contains("vimeo")) {
+        if (mLesson.getPostUrl().contains("vimeo") && false) {
             return Uri.parse( url);
         }
 
-        return Uri.parse(mediaUri+mLesson.getPostUrl());
+//        return Uri.parse(mediaUri+mLesson.getPostUrl());
+        return Uri.parse(mLesson.getMp4Url());
 
     }
 

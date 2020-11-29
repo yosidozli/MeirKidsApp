@@ -55,7 +55,7 @@
     <string name="text_content_about_title">About</string>
     <string name="text_content_about" translatable="false"> ערוץ הילדים, המשדר מגוון תכניות מידי שבוע, יוצר חיבור מעניין בין עולם היהדות על ערכיו, לבין סביבת החיים הטבעית המוכרת לילדים. בכל פרק מתמודדים הילדים עם דילמה ערכית מסויימת בדרך חוויתית, ומנווטים את העלילה למסקנות מתבקשות, תוך מיצוי היבטים חינוכיים רבים העולים ממנה. התכניות עוסקות בשלל נושאים המהווים את עולמו של הילד.</string>
     <string name="frag_user_details_user_name_title" translatable="false">User</string>
-    <string name="text_content_contact_us_title" >Contact Us</string>
+    <string name="text_content_contact_us_title">Contact Us</string>
 
 
     <string name="message_register_to_continue">To watch all content register</string>

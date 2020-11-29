@@ -1,11 +1,11 @@
 package com.yosidozli.meirkidsapp.dialogs;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.util.Log;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 import com.yosidozli.meirkidsapp.R;
 
@@ -24,7 +24,7 @@ public class ForceUpdateDialog extends UpdateDialog {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public AlertDialog onCreateDialog(Bundle savedInstanceState) {
         setStrings(R.string.force_update_dialog_title, R.string.force_update_dialog_message, R.string.force_update_dialog_update, R.string.force_update_dialog_cancel);
 
 

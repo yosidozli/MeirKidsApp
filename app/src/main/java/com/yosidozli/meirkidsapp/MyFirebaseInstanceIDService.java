@@ -1,23 +1,18 @@
 package com.yosidozli.meirkidsapp;
 
-import android.util.Log;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
 
 /**
  * Created by yosid on 30/06/2017.
  */
 
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
     private final static String TAG ="FbInstanceIdSer";
-    @Override
-    public void onTokenRefresh() {
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        //Log.d(TAG, "onTokenRefresh: "+refreshedToken);
-        sendingRegistrationToServer(refreshedToken);
-        super.onTokenRefresh();
 
+    @Override
+    public void onNewToken(String s) {
+        super.onNewToken(s);
     }
 
     private void sendingRegistrationToServer(String token){

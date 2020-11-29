@@ -1,11 +1,8 @@
 package com.yosidozli.meirkidsapp;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.net.URL;
 
 /**
  * Created by yosid on 18/05/2017.
@@ -20,6 +17,7 @@ public class Lesson implements Serializable {
     private String cropUrl;
     private String lessonSetID;
     private String vimeoId;
+    private final String mp4Url;
     private boolean forUsersOnly;
 
     transient private Bitmap image;
@@ -28,7 +26,7 @@ public class Lesson implements Serializable {
 
 
 
-    public Lesson(String id, String title, String imageUrl, String setName, String postUrl, String cropUrl, String lessonSetID, boolean forUsersOnly,String vimeoId) {
+    public Lesson(String id, String title, String imageUrl, String setName, String postUrl, String cropUrl, String lessonSetID, boolean forUsersOnly,String vimeoId , String mp4Url) {
         this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;
@@ -38,6 +36,7 @@ public class Lesson implements Serializable {
         this.lessonSetID = lessonSetID;
         this.forUsersOnly = forUsersOnly;
         this.vimeoId = vimeoId;
+        this.mp4Url = mp4Url;
        // setImage(imageUrl);
     }
 
@@ -122,5 +121,9 @@ public class Lesson implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMp4Url() {
+        return mp4Url;
     }
 }

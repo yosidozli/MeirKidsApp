@@ -3,35 +3,23 @@ package com.yosidozli.meirkidsapp;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.transition.CircularPropagation;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.TransitionOptions;
-import com.bumptech.glide.annotation.GlideModule;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
-import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.BitmapTransitionFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,7 +85,7 @@ public class LessonSetAdapter extends RecyclerView.Adapter<LessonSetAdapter.Less
         return list.size();
     }
 
-    class LessonSetViewHolder extends ViewHolder implements View.OnClickListener{
+    class LessonSetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView titleTextView;
         ImageView imageView;
         private String imageUrl;
