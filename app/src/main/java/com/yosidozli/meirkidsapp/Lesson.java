@@ -126,4 +126,13 @@ public class Lesson implements Serializable {
     public String getMp4Url() {
         return mp4Url;
     }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", mp4Url='" + mp4Url + '\'' +
+                '}';
+    }
 }

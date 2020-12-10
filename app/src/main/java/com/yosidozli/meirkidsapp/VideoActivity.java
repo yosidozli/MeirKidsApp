@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +33,6 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.yosidozli.meirkidsapp.registration.User;
 
 import Utils.AnalyticsUtils;
 import Utils.MyLogger;
@@ -89,7 +89,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
             mLessonsList.setLayoutManager( new LinearLayoutManager(VideoActivity.this));
             mLessonsList.setHasFixedSize(true);
             mLessonAdapter = new LessonAdapter(MainActivity.staticLesson,VideoActivity.this,layout);
-            if(mUser == null || !mUser.isApproved())
+            if(mUser == null )
                 mLessonAdapter.setShouldShowRegister(true);
             mLessonsList.setAdapter(mLessonAdapter);
 
@@ -166,7 +166,8 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         //todo use polimorphizem instead of casting
 //        fetchLessonUrl();
         Log.d(TAG, "onResume: "+mLesson.getMp4Url());
-        initializePlayer(Uri.parse(mLesson.getMp4Url()));
+//        initializePlayer(Uri.parse(mLesson.getMp4Url()));
+        playOrNavigate(mUser,mLesson);
     }
 
     private void fetchLessonUrl(){
@@ -195,7 +196,7 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         //Log.d(TAG, "getUriToPlay: "+mLesson.isForUsersOnly());
         if(mLesson.isForUsersOnly() ){
             //Log.d(TAG, "getUriToPlay: check if mUser is null "+(mUser == null));
-            if(mUser ==null || !mUser.isApproved())
+            if(mUser ==null )
                 return Uri.parse(mediaUri + mLesson.getCropUrl());
 
         }
@@ -284,14 +285,14 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        if((mUser != null && mUser.isApproved()) || clickedItemIndex != 0) {
+        if((mUser != null ) || clickedItemIndex != 0) {
             releasePlayer();
             mLesson = MainActivity.staticLesson.get(clickedItemIndex);
             mAnalyticsUtils.logLesson(mLesson);
             if(mUser != null)
                 logger.logLessonChosen(String.valueOf(mUser.getPersonId()),mLesson.getId());
-            fetchLessonUrl();
-
+//            fetchLessonUrl();
+            finishedDownloading(true);
            // initializePlayer(getUriToPlay());
         }else{
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -322,6 +323,16 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
             linksCache.put(Long.parseLong(mLesson.getId()), mLesson.getPostUrl());
 //            Log.d(TAG, "finishedDownloading: put in cache "+mLesson.getId()+" "+mLesson.getPostUrl());
         }
-        initializePlayer(getUriToPlay());
+//        initializePlayer(getUriToPlay());
+//        initializePlayer(Uri.parse( mLesson.getMp4Url()));
+        playOrNavigate(mUser,mLesson);
+    }
+
+    private void playOrNavigate(User user, Lesson lesson){
+        if(lesson.isForUsersOnly() && user == null){
+            Toast.makeText(this,"תכנית זו היא למנויים בלבד\n כדי לצפות יש להירשם/להתחבר",Toast.LENGTH_LONG).show();
+        } else {
+            initializePlayer(Uri.parse( lesson.getMp4Url()));
+        }
     }
 }

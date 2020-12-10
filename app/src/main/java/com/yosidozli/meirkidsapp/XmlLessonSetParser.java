@@ -26,7 +26,7 @@ public class XmlLessonSetParser {
 
 
 
-    public List parse(InputStream in) throws XmlPullParserException, IOException {
+    public List<LessonSet> parse(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -38,9 +38,9 @@ public class XmlLessonSetParser {
         }
     }
 
-    private List readSetArray(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private List<LessonSet> readSetArray(XmlPullParser parser) throws XmlPullParserException, IOException {
 
-    List lessons = new ArrayList();
+    List<LessonSet> lessons = new ArrayList<>();
 
         parser.require(XmlPullParser.START_TAG,ns, ARRAY_OF_SETS);
 

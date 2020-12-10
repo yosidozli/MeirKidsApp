@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -26,8 +27,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
-
-import Utils.GlideApp;
 
 /**
  * Created by yosid on 20/05/2017.
@@ -117,7 +116,7 @@ public class LessonSetAdapter extends RecyclerView.Adapter<LessonSetAdapter.Less
 
 
 
-            GlideApp.with(itemView).load(imageUrl).centerCrop().listener(new RequestListener<Drawable>() {
+            Glide.with(itemView).load(imageUrl).centerCrop().listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     progressBar.setVisibility(View.GONE);

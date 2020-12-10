@@ -15,17 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.yosidozli.meirkidsapp.registration.User;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AboutFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AboutFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class AboutFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,7 +25,7 @@ public class AboutFragment extends Fragment {
 
 
     // TODO: Rename and change types of parameters
-    private User mUser;
+//    private User mUser;
     private TextView mUserNameView;
     private WebView mWebView;
     private ProgressBar mProgressBar;
@@ -43,29 +35,23 @@ public class AboutFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param user Parameter 1.
-     * * @return A new instance of fragment AboutFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AboutFragment newInstance(User user) {
-        AboutFragment fragment = new AboutFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(USER, user);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
+//    // TODO: Rename and change types and number of parameters
+//    public static AboutFragment newInstance(User user) {
+//        AboutFragment fragment = new AboutFragment();
+//        Bundle args = new Bundle();
+////        args.putSerializable(USER, user);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mUser = (User) getArguments().getSerializable(USER);
-
-        }
+//        if (getArguments() != null) {
+//            mUser = (User) getArguments().getSerializable(USER);
+//
+//        }
     }
 
 

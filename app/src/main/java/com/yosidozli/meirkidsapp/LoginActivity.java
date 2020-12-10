@@ -4,11 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,14 +20,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.yosidozli.meirkidsapp.registration.User;
-import com.yosidozli.meirkidsapp.registration.UserParser;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import androidx.lifecycle.ViewModelProvider;
+//import com.yosidozli.meirkidsapp.registration.User;
 
 
 /**
@@ -44,16 +37,18 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+//    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private EditText mUserNameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    public  User mUser = null;
+//    private   User mUser = null;
     private PreferencesUtils prefUtils;
     private TextView mLoginTextView;
+    private MainViewModel viewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +56,25 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
 
         setTitleBarImage();
         setContentView(R.layout.activity_login);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+
+        viewModel.getUser().observe(this, viewState -> {
+            Log.d(TAG, "onCreate: "+viewState);
+            if(viewState instanceof ViewState.loading){
+                showProgress(true);
+            } else if(viewState instanceof ViewState.Failure){
+                showProgress(false);
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            } else if(viewState instanceof ViewState.Success){
+                showProgress(false);
+                Intent resultIntent = new Intent();
+                setResult(AppCompatActivity.RESULT_OK,resultIntent);
+                finish();
+
+            }
+        });
         // Set up the login form.
         mUserNameView = (EditText) findViewById(R.id.user);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -173,9 +187,7 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+
 
         // Reset errors.
         mUserNameView.setError(null);
@@ -213,15 +225,16 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(user, password);
-            mAuthTask.execute(userValidationServiceUrl);
+//            showProgress(true);
+//            mAuthTask = new UserLoginTask(user, password);
+//            mAuthTask.execute(userValidationServiceUrl);
+            viewModel.authenticate(user,password);
         }
     }
 
     private boolean isUserValid(String user) {
         //TODO: Replace this with your own logic
-        return user != null;
+        return user != null || !user.isEmpty();
     }
 
     private boolean isPasswordValid(String password) {
@@ -323,108 +336,108 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<String, Void, User> {
-
-        private final String mUserName;
-        private final String mPassword;
-        UserParser mUserParser;
-
-        UserLoginTask(String userName, String password) {
-            mUserName = userName;
-            mPassword = password;
-            mUserParser = UserParser.getInstance();
-            mUserParser.setUserName(userName);
-            mUserParser.setPassword(password);
-        }
-
-        @Override
-        protected User doInBackground(String... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                return validateUserFromNet(params[0]);
-            } catch (IOException e) {
-                //Log.d(TAG,"unable to validate user",e);
-                e.printStackTrace();
-                return null;
-            }
-
-
-
-        }
-        private User validateUserFromNet(String userUrl) throws IOException{
-            InputStream inputStream = null;
-            User user = null;
-            try {
-                inputStream = downloadUserUrl(userUrl);
-                mUserParser = UserParser.getInstance();
-                user = mUserParser.validateUser(inputStream);
-                if(user != null){
-                    user.setPassword(mPassword);
-                    user.setUserName(mUserName);
-                }
-
-
-
-            }
-            finally {
-                if(inputStream != null)
-                    inputStream.close();
-            }
-            return user;
-        }
-
-        private InputStream downloadUserUrl(String validationUrl) throws IOException {
-            String fullUrl = Uri.parse(validationUrl).buildUpon().appendPath(mUserName).appendPath(mPassword).toString();
-            URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            // Starts the query
-            conn.connect();
-            return conn.getInputStream();
-        }
-
-
-
-        @Override
-        protected void onPostExecute(final User user) {
-            boolean success = false;
-            mUser = user;
-            if(mUser != null) {
-                success = true;
-                /*TODO delete static variable afterwards*/
-                mUser.setApproved(true);
-                prefUtils.putUserInPreferences(mUser);
-
-                //MainActivity.setApprovedUser(true);
-            } else {
-               mUser = prefUtils.getUserFromPreferences();
-                if (mUser != null) {
-                    mUser.setApproved(false);
-                    prefUtils.putUserInPreferences(mUser);
-                }
-            }
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                Intent resultIntent = new Intent();
-                setResult(AppCompatActivity.RESULT_OK,resultIntent);
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
+//    public class UserLoginTask extends AsyncTask<String, Void, User> {
+//
+//        private final String mUserName;
+//        private final String mPassword;
+//        UserParser mUserParser;
+//
+//        UserLoginTask(String userName, String password) {
+//            mUserName = userName;
+//            mPassword = password;
+//            mUserParser = UserParser.getInstance();
+//            mUserParser.setUserName(userName);
+//            mUserParser.setPassword(password);
+//        }
+//
+//        @Override
+//        protected User doInBackground(String... params) {
+//            // TODO: attempt authentication against a network service.
+//
+//            try {
+//                return validateUserFromNet(params[0]);
+//            } catch (IOException e) {
+//                //Log.d(TAG,"unable to validate user",e);
+//                e.printStackTrace();
+//                return null;
+//            }
+//
+//
+//
+//        }
+//        private User validateUserFromNet(String userUrl) throws IOException{
+//            InputStream inputStream = null;
+//            User user = null;
+//            try {
+//                inputStream = downloadUserUrl(userUrl);
+//                mUserParser = UserParser.getInstance();
+//                user = mUserParser.validateUser(inputStream);
+//                if(user != null){
+//                    user.setPassword(mPassword);
+//                    user.setUserName(mUserName);
+//                }
+//
+//
+//
+//            }
+//            finally {
+//                if(inputStream != null)
+//                    inputStream.close();
+//            }
+//            return user;
+//        }
+//
+//        private InputStream downloadUserUrl(String validationUrl) throws IOException {
+//            String fullUrl = Uri.parse(validationUrl).buildUpon().appendPath(mUserName).appendPath(mPassword).toString();
+//            URL url = new URL(fullUrl);
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setReadTimeout(10000 /* milliseconds */);
+//            conn.setConnectTimeout(15000 /* milliseconds */);
+//            conn.setRequestMethod("GET");
+//            conn.setDoInput(true);
+//            // Starts the query
+//            conn.connect();
+//            return conn.getInputStream();
+//        }
+//
+//
+//
+//        @Override
+//        protected void onPostExecute(final User user) {
+//            boolean success = false;
+//            mUser = user;
+//            if(mUser != null) {
+//                success = true;
+//                /*TODO delete static variable afterwards*/
+//                mUser.setApproved(true);
+//                prefUtils.putUserInPreferences(mUser);
+//
+//                //MainActivity.setApprovedUser(true);
+//            } else {
+//               mUser = prefUtils.getUserFromPreferences();
+//                if (mUser != null) {
+//                    mUser.setApproved(false);
+//                    prefUtils.putUserInPreferences(mUser);
+//                }
+//            }
+//            mAuthTask = null;
+//            showProgress(false);
+//
+//            if (success) {
+//                Intent resultIntent = new Intent();
+//                setResult(AppCompatActivity.RESULT_OK,resultIntent);
+//                finish();
+//            } else {
+//                mPasswordView.setError(getString(R.string.error_incorrect_password));
+//                mPasswordView.requestFocus();
+//            }
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            mAuthTask = null;
+//            showProgress(false);
+//        }
+//    }
 }
 

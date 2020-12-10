@@ -34,7 +34,7 @@ public class XmlLessonParser {
 
 
 
-    public List parse(InputStream in) throws XmlPullParserException, IOException {
+    public List<Lesson> parse(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -48,7 +48,7 @@ public class XmlLessonParser {
 
 
 
-    private List readLessonArray (XmlPullParser parser) throws XmlPullParserException, IOException {
+    private List<Lesson> readLessonArray (XmlPullParser parser) throws XmlPullParserException, IOException {
 
     List lessons = new ArrayList();
 
@@ -63,9 +63,9 @@ public class XmlLessonParser {
             if(name.equals(LESSON)) {
 
                 Lesson lesson = readLesson(parser);
-                VimeoLesson vLesson = new VimeoLesson(lesson );
+//                VimeoLesson vLesson = new VimeoLesson(lesson );
 
-                lessons.add(vLesson);
+                lessons.add(lesson);
 
             }else {
                 skip(parser);
