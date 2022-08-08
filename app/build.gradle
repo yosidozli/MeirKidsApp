@@ -10,8 +10,8 @@ android {
         applicationId "com.yosidozli.meirkidsapp"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 12
-        versionName "1.4.6"
+        versionCode 13
+        versionName "1.4.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "b12daa49-d8b1-4235-9420-876f5a55348f",
                                 // Project number pulled from dashboard, local value is ignored.
