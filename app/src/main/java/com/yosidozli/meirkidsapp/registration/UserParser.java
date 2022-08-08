@@ -17,7 +17,7 @@
 //
 //public class UserParser {
 //
-//    private final static String userValidationServiceUrl = "http://82.80.198.104/UserValidationServiceWebGet/UserValidationService.svc/IsUserValid";
+//    private final static String userValidationServiceUrl = "https://meirkids.co.il/UserValidationServiceWebGet/UserValidationService.svc/IsUserValid";
 //    private static UserParser instance = null;
 //    private String userName;
 //    private String password;

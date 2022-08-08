@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MeirKidsApp.iml" filepath="$PROJECT_DIR$/MeirKidsApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MeirKidsApp.iml" filepath="$PROJECT_DIR$/.idea/MeirKidsApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MeirKidsApp.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/vimeocache-debug/MeirKidsApp.vimeocache-debug.iml" filepath="$PROJECT_DIR$/.idea/modules/vimeocache-debug/MeirKidsApp.vimeocache-debug.iml" />
     </modules>
   </component>

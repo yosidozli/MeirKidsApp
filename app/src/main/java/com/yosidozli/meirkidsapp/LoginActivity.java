@@ -30,7 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 public class LoginActivity extends AppCompatActivity /*implements LoaderCallbacks<Cursor>*/ {
 
     private static final String TAG = "LOGIN_ACTIVITY";
-    private final static String userValidationServiceUrl = "http://82.80.198.104/UserValidationServiceWebGet/UserValidationService.svc/IsUserValid";
+    private final static String userValidationServiceUrl = "http://194.88.111.167/ApiCheck/api/loginapi/isuservalid";
 
 
 

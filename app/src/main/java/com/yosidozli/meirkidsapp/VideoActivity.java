@@ -39,7 +39,8 @@ import Utils.MyLogger;
 import yosidozli.com.utils.PersistentLruCache;
 
 public class VideoActivity extends AppCompatActivity implements LessonAdapter.ListItemClickListener ,VimeoUtilsSingleton.Listener {
-    String mediaUri = "http://media3.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
+//    String mediaUri = "http://media3.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
+    String mediaUri = "https://media102.meirkids.co.il";///131/059/6//Idx_5968807.mp4"; //"rtmp://192.168.77.2:1935//michael/_definst_mp4:MeirKidsNew/131/059/6/Idx_5968807.mp4";
     String notApprovedMediaUri = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 
     SimpleExoPlayerView mPlayerView;
@@ -332,7 +333,8 @@ public class VideoActivity extends AppCompatActivity implements LessonAdapter.Li
         if(lesson.isForUsersOnly() && user == null){
             Toast.makeText(this,"תכנית זו היא למנויים בלבד\n כדי לצפות יש להירשם/להתחבר",Toast.LENGTH_LONG).show();
         } else {
-            initializePlayer(Uri.parse( lesson.getMp4Url()));
+            String newLesson = lesson.getMp4Url().replace("https://media2.meirkids.org.il//","https://media102.meirkids.co.il//");
+            initializePlayer(Uri.parse( newLesson));
         }
     }
 }

@@ -14,7 +14,7 @@ import kotlin.coroutines.resumeWithException
 
 private const val LESSONS_URL = "https://meirkids.co.il/temp/xmlLessonesKids/lessons.asp"
 private const val SETS_URL = "https://meirkids.co.il/temp/xmlLessonesKids/sets.asp"
-private const val USER_AUTH_URL = "http://82.80.198.104/UserValidationServiceWebGet/UserValidationService.svc/IsUserValid"
+private const val USER_AUTH_URL = "http://194.88.111.167/ApiCheck/api/loginapi/isuservalid"
 private const val TAG = "WebApi"
 
 suspend fun fetchLessonsXml() = suspendCancellableCoroutine<InputStream> {
@@ -55,12 +55,16 @@ suspend fun fetchSetsXml() = suspendCancellableCoroutine<InputStream> {
 }
 
 suspend fun fetchUser(userName :String , password: String) = suspendCancellableCoroutine<User>{
+    Log.d(TAG, "fetchUser:")
     val adapter = User.jsonAdapter
+
 //    val adapter = Moshi.Builder().build().adapter(User::class.java)
     val client = OkHttpClient()
-    val url = Uri.parse(USER_AUTH_URL).buildUpon().appendPath(userName).appendPath(password).toString()
+    val url = Uri.parse(USER_AUTH_URL).buildUpon().appendQueryParameter("userName",userName).appendQueryParameter("password",password).toString()
+    Log.d(TAG, "fetchUser: $url")
     val request = Request.Builder().url(url).build()
     client.newCall(request).execute().use { response ->
+        Log.d(TAG, "fetchUser: $response")
         if(!response.isSuccessful)
             it.resumeWithException(IOException("unexpected call $response"))
 

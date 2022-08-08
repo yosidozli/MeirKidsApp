@@ -1,6 +1,7 @@
 package com.yosidozli.meirkidsapp
 
 import android.content.SharedPreferences
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,6 +23,7 @@ class UserRepository(val pref: PreferencesUtils) {
             } catch (t: Throwable) {
                 t.message
             }
+            Log.d("UserRepository", "authenticate: $res")
             when(res){
                 is User -> {
                     _userLiveData.postValue(ViewState.Success(res))
