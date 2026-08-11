@@ -23,6 +23,10 @@ class MainActivity : AppCompatActivity() {
         private const val KEY_CURRENT_URL = "current_url"
         private const val PREFS_NAME = "meirkids_prefs"
         private const val KEY_ASKED_NOTIFICATION_PERMISSION = "asked_notification_permission"
+
+        // Appended to the WebView's default user agent so the backend/CDN can
+        // recognize and whitelist requests coming from this app (e.g. video access).
+        private const val APP_USER_AGENT_TOKEN = "MeirKidsAndroidApp"
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -89,6 +93,7 @@ class MainActivity : AppCompatActivity() {
             setSupportMultipleWindows(false)
             mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
             cacheMode = WebSettings.LOAD_DEFAULT
+            userAgentString = "$userAgentString $APP_USER_AGENT_TOKEN/${BuildConfig.VERSION_NAME}"
         }
 
         CookieManager.getInstance().apply {
