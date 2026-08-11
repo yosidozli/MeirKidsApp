@@ -1,13 +1,19 @@
 package com.yosidozli.meirkidsapp
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.webkit.CookieManager
 import android.webkit.WebSettings
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.google.firebase.messaging.FirebaseMessaging
 import com.yosidozli.meirkidsapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val START_URL = "https://meirkids.co.il/"
         private const val KEY_CURRENT_URL = "current_url"
+        private const val PREFS_NAME = "meirkids_prefs"
+        private const val KEY_ASKED_NOTIFICATION_PERMISSION = "asked_notification_permission"
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -25,6 +33,9 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             chromeClient.onFileChooserResult(result.resultCode, result.data)
         }
+
+    private val notificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { /* no-op either way */ }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -40,6 +51,27 @@ class MainActivity : AppCompatActivity() {
 
         val restoreUrl = savedInstanceState?.getString(KEY_CURRENT_URL)
         binding.webView.loadUrl(restoreUrl ?: START_URL)
+
+        if (BuildConfig.DEBUG) {
+            FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+                Log.i("MeirKidsFcm", "token: $token")
+            }
+        }
+    }
+
+    private fun maybeRequestNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+
+        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        if (prefs.getBoolean(KEY_ASKED_NOTIFICATION_PERMISSION, false)) return
+
+        val granted = ContextCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+        if (granted) return
+
+        prefs.edit().putBoolean(KEY_ASKED_NOTIFICATION_PERMISSION, true).apply()
+        notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
     private fun setupWebView() {
@@ -74,6 +106,7 @@ class MainActivity : AppCompatActivity() {
             },
             onPageVisible = {
                 if (!pageLoadFailed) hideErrorView()
+                maybeRequestNotificationPermission()
             }
         )
 
