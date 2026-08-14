@@ -10,7 +10,6 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.core.content.FileProvider
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import java.io.File
 
@@ -63,7 +62,6 @@ class MeirKidsChromeClient(
 
     private fun hideSystemBars() {
         val window = activity.window
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         controller.hide(androidx.core.view.WindowInsetsCompat.Type.systemBars())
         controller.systemBarsBehavior =
@@ -74,7 +72,6 @@ class MeirKidsChromeClient(
         val window = activity.window
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         controller.show(androidx.core.view.WindowInsetsCompat.Type.systemBars())
-        WindowCompat.setDecorFitsSystemWindows(window, true)
     }
 
     override fun onPermissionRequest(request: PermissionRequest) {

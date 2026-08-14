@@ -3,21 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <WebView
-        android:id="@+id/web_view"
+    <FrameLayout
+        android:id="@+id/content_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/web_content_background">
+
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include
+            android:id="@+id/error_view"
+            layout="@layout/error_loading_data_layout"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/fullscreen_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/black"
-        android:visibility="gone" />
-
-    <include
-        android:id="@+id/error_view"
-        layout="@layout/error_loading_data_layout"
         android:visibility="gone" />
 
 </FrameLayout>
