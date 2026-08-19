@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Meir Kids</string>
 
-    <string name="error_no_internet">No internet connection please press button to try again</string>
+    <string name="error_no_internet">Oops! We can\'t connect right now. Tap the button below to try again.</string>
     <string name="error_still_offline">Still no internet connection</string>
     <string name="error_cannot_open_link">No app found to open this link</string>
     <string name="button_try_again">Try again</string>

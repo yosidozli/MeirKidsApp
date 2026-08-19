@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">ערוץ מאיר לילדים</string>
     <string name="button_try_again">נסה שוב</string>
-    <string name="error_no_internet">תקלה בחיבור לאינטרנט נא לחץ לנסות שוב</string>
+    <string name="error_no_internet">אופס! לא הצלחנו להתחבר כרגע. לחצו על הכפתור למטה כדי לנסות שוב.</string>
     <string name="error_still_offline">עדיין אין חיבור לאינטרנט</string>
     <string name="error_cannot_open_link">לא נמצאה אפליקציה לפתיחת הקישור</string>
     <string name="notification_channel_name">התראות כלליות</string>
