@@ -17,8 +17,8 @@ android {
         applicationId "com.yosidozli.meirkidsapp"
         minSdk 23
         targetSdk 36
-        versionCode 14
-        versionName "2.0.0"
+        versionCode 15
+        versionName "3.0.0"
     }
 
     buildFeatures {
