@@ -18,7 +18,7 @@ android {
         minSdk 23
         targetSdk 36
         versionCode 15
-        versionName "3.0.0"
+        versionName "3.0.1"
     }
 
     buildFeatures {
